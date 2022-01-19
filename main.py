@@ -6,6 +6,7 @@ from starlette.responses import HTMLResponse, RedirectResponse
 from fastapi import Request
 import json
 from fastapi import HTTPException
+from starlette.responses import JSONResponse
 
 
 
@@ -60,4 +61,13 @@ async def auth(request: Request):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Could not validate credentials',
             headers={'WWW-Authenticate': 'Bearer'},
-        )        
+        ) 
+
+
+    user_data = await oauth.google.parse_id_token(request, access_token)
+    # TODO: validate email in our database and generate JWT token
+    jwt = f'sample jwt {user_data["email"]}'
+    # TODO: return the JWT token to the user so it can make requests to our /api endpoint
+    return JSONResponse({'data':user_data,'result': True, 'access_token': jwt})
+   
+       
