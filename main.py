@@ -71,3 +71,9 @@ async def auth(request: Request):
     return JSONResponse({'data':user_data,'result': True, 'access_token': jwt})
    
        
+
+@app.get('/logout')
+async def logout(request: Request):
+    request.session.pop('user', None)
+    return RedirectResponse(url='/')
+
