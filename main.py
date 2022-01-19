@@ -1,11 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,status
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.config import Config
-from authlib.integrations.starlette_client import OAuth
+from authlib.integrations.starlette_client import OAuth,OAuthError
 from starlette.responses import HTMLResponse, RedirectResponse
 from fastapi import Request
 import json
-
+from fastapi import HTTPException
 
 
 
@@ -49,4 +49,15 @@ async def google_login(request: Request):
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 
-        
+
+
+@app.get('/auth')
+async def auth(request: Request):
+    try:
+        access_token = await oauth.google.authorize_access_token(request)
+    except OAuthError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Could not validate credentials',
+            headers={'WWW-Authenticate': 'Bearer'},
+        )        
