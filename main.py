@@ -11,6 +11,14 @@ from starlette.responses import JSONResponse
 
 
 app = FastAPI()
+    
+    
+    
+ @app.get('/')
+def test():
+    return "server start"
+
+'''
 app.add_middleware(SessionMiddleware, secret_key="!secret")
 
 config = Config('.env')
@@ -27,7 +35,7 @@ oauth.register(
     }
 )
 
-'''
+
 @app.get('/')
 async def homepage(request: Request):
     user = request.session.get('user')
@@ -42,7 +50,6 @@ async def homepage(request: Request):
     #return HTMLResponse("/login")
     return RedirectResponse(url='/login')
 
-'''
     
     
     
@@ -82,4 +89,4 @@ async def auth(request: Request):
 async def logout(request: Request):
     request.session.pop('user', None)
     return RedirectResponse(url='/')
-
+'''
