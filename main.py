@@ -27,7 +27,7 @@ oauth.register(
     }
 )
 
-
+'''
 @app.get('/')
 async def homepage(request: Request):
     user = request.session.get('user')
@@ -42,7 +42,13 @@ async def homepage(request: Request):
     #return HTMLResponse("/login")
     return RedirectResponse(url='/login')
 
-
+'''
+    
+    
+    
+ @app.get('/')
+def test():
+    return "server start"
 
 @app.get('/login')
 async def google_login(request: Request):
