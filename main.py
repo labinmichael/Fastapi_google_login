@@ -18,7 +18,7 @@ app = FastAPI()
 def test():
     return "server start"
 
-'''
+
 app.add_middleware(SessionMiddleware, secret_key="!secret")
 
 config = Config('.env')
@@ -89,4 +89,4 @@ async def auth(request: Request):
 async def logout(request: Request):
     request.session.pop('user', None)
     return RedirectResponse(url='/')
-'''
+
